@@ -1,9 +1,10 @@
 import React from 'react'
 import logo from "../../assets/img/pizza-logo.svg"
-import Button from '../button/Button'
+import { Button } from '../index'
 
 
 const Header = () => {
+
     return (
         <div className="header">
             <div className="container">
@@ -15,9 +16,7 @@ const Header = () => {
                     </div>
                 </div>
                 <div className="header__cart">
-                    <Button outline={true}>Hello</Button>
-                    <Button outline={false}>World</Button>
-                    <a href="/cart.html" className="button button--cart">
+                    <Button className="button--cart" outline={false}>
                         <span>520 ₽</span>
                         <div className="button__delimiter"></div>
                         <svg
@@ -50,7 +49,7 @@ const Header = () => {
                             />
                         </svg>
                         <span>3</span>
-                    </a>
+                    </Button>
                 </div>
             </div>
         </div>

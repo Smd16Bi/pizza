@@ -2,12 +2,14 @@ import React from 'react'
 import classNames from 'classnames'
 
 
-const Button = (props) => {
+const Button = ({className,outline,children}) => {
     return (
-        <button className={classNames("button", {
-            "button--outline": props.outline === true,
-        })}>
-            {props.children}
+        <button className={classNames("button", className,
+            {
+                "button--outline": outline === true
+            }
+        )}>
+            {children}
         </button>
     )
 }
