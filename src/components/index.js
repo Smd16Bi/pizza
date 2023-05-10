@@ -8,3 +8,4 @@ export { default as Button } from "./button/Button";
 export { default as Categories } from "./categories/Categories";
 export { default as Header } from "./header/Header";
 export { default as SortPopup } from "./sort/SortPopup"
+export { default as PizzaBlock } from "./pizzaBlock/PizzaBlock"
