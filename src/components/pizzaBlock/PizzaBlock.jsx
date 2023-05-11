@@ -1,10 +1,11 @@
 import React from 'react'
 import classNames from 'classnames'
-const PizzaBlock = ({ item }) => {
-    // 01:09:00
-    console.log(item.types.length);
-    const types = ["Thin", "Traditional"];
-    const [activeType, setActiveType] = React.useState(0);
+import PropTypes from 'prop-types';
+
+const PizzaBlock = ({ name, imageUrl,price, types, sizes }) => {
+    const avalibleTypes = ["Thin", "Traditional"];
+    const avalibleSize = [26,30,40];
+    const [activeType, setActiveType] = React.useState(types[0]);
     const [activeSize, setActiveSize] = React.useState(0);
 
     const onSelectType = (index) => {
@@ -18,13 +19,13 @@ const PizzaBlock = ({ item }) => {
         <div className="pizza-block">
             <img
                 className="pizza-block__image"
-                src={item.imageUrl}
+                src={imageUrl}
                 alt="Pizza"
             />
-            <h4 className="pizza-block__title">{item.name}</h4>
+            <h4 className="pizza-block__title">{name}</h4>
             <div className="pizza-block__selector">
                 <ul>
-                    {types.map((type, index) => {
+                    {avalibleTypes.map((type, index) => {
                         return (
                             <li
                                 onClick={() => onSelectType(index)}
@@ -33,7 +34,7 @@ const PizzaBlock = ({ item }) => {
                                         "active": activeType === index
                                     },
                                     {
-                                        "disabled": item.types.includes(index)
+                                        "disabled": !types.includes(index)
                                     }
                                 )}
                                 key={type}
@@ -42,17 +43,31 @@ const PizzaBlock = ({ item }) => {
                             </li>
                         )
                     })}
-                    {/* <li className="active">Thin</li>
-                    <li className='disabled'>Traditional</li> */}
                 </ul>
                 <ul>
-                    <li className="active">26 cm.</li>
-                    <li>30 cm.</li>
-                    <li>40 cm.</li>
+                    {
+                        avalibleSize.map( (size,index)=> {
+                            return (
+                                <li 
+                                    key={size}
+                                    onClick={()=> {onSelectSize(index)}}
+                                    className={classNames(
+                                        {   
+                                            "active": activeSize === index
+                                        },
+                                        {
+                                            "disabled": sizes.includes(size)
+                                        }
+                                    )}
+                                > 
+                                {size} cm.
+                                </li>)
+                        })
+                    }
                 </ul>
             </div>
             <div className="pizza-block__bottom">
-                <div className="pizza-block__price">From {item.price} $ </div>
+                <div className="pizza-block__price">From {price} $ </div>
                 <div className="button button--outline button--add">
                     <svg
                         width="12"
@@ -72,6 +87,21 @@ const PizzaBlock = ({ item }) => {
             </div>
         </div>
     )
+}
+
+PizzaBlock.propTypes = {
+    name:PropTypes.string.isRequired,
+    imageUrl:PropTypes.string.isRequired,
+    price:PropTypes.number.isRequired,
+    types:PropTypes.arrayOf(PropTypes.number).isRequired,
+    sizes:PropTypes.arrayOf(PropTypes.number).isRequired
+}
+PizzaBlock.defaultProps = {
+    name: "Name default",
+    imageUrl: "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/2ffc31bb-132c-4c99-b894-53f7107a1441.jpg",
+    price: 1,
+    types: [],
+    sizes: [],
 }
 
 export default PizzaBlock
