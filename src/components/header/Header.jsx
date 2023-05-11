@@ -20,7 +20,7 @@ const Header = () => {
                 </div>
                 <div className="header__cart">
                     <NavLink to="/cart">
-                        <Button className="button--cart" outline={false}>
+                        <Button  className="button--cart" outline={false}>
                             <span>520 $</span>
                             <div className="button__delimiter"></div>
                             <svg
