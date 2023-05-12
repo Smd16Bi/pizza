@@ -10,12 +10,16 @@ const Home = ({ items = [] }) => {
                     onClick={(name) => console.log(name)}
                     items={["All", "Meat", "Vegetarian", "Grill", "Spicy", "Closed"]}
                 />
-                <SortPopup items={["Popularity", "Price", "Alphabetically"]} />
+                <SortPopup items={[
+                    { name: "Popularity", type: "popularity" },
+                    { name: "Price", type: "Price" }, 
+                    { name:"Alphabetically", type: "alphabetically"}
+                ]} />
             </div>
             <h2 className="content__title">All</h2>
             <div className="content__items">
                 {items.map(obj => {
-                    return <PizzaBlock key={obj.id} {...obj}/>
+                    return <PizzaBlock key={obj.id} {...obj} />
                 })}
             </div>
         </div>
