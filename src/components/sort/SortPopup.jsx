@@ -1,10 +1,9 @@
 import React from 'react'
 
 const SortPopup = ({items = []}) => {
-    // 01:30:00
     const [visiblePopup, setVisiblePopup] = React.useState(false);
     const [activeSort, setActiveSort] = React.useState(0);
-    const activeLavel = items[activeSort];
+    const activeLavel = items[activeSort].name;
 
     const sorfRef = React.useRef();
     const toggleVisiblePopUp = () => {
@@ -43,7 +42,7 @@ const SortPopup = ({items = []}) => {
             {visiblePopup && <div className="sort__popup">
                 <ul>
                     {items && items.map( (el,index) => {
-                        return <li onClick={() => onSelectedItem(index)} className={activeSort === index ? "active" : ""}  key={`${el}_${index}`}>{el}</li>
+                        return <li onClick={() => onSelectedItem(index)} className={activeSort === index ? "active" : ""}  key={`${el.name}_${index}`}>{el.name}</li>
                     })}
                 </ul>
             </div>}
