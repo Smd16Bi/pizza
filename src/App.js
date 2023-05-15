@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPizzas } from "./Redux/action/pizzas"
 
-
+// 51:50
 const App = () => {
   const dispatch = useDispatch();
   const state = useSelector(({pizzas, filters}) => {
