@@ -18,7 +18,7 @@ const Home = ({ items = [] }) => {
             </div>
             <h2 className="content__title">All</h2>
             <div className="content__items">
-                {items.map(obj => {
+                {items[0].map(obj => {
                     return <PizzaBlock key={obj.id} {...obj} />
                 })}
             </div>
