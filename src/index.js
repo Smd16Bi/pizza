@@ -8,12 +8,6 @@ import { Provider } from 'react-redux'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-const inc = () => {
-  store.dispatch({ type: 'counter/incremented' })
-}
-
-store.subscribe(() => console.log(store.getState()))
-
 root.render(
   <BrowserRouter>
     <Provider store={store}>
