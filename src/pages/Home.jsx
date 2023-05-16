@@ -11,6 +11,7 @@ const sortItems = [
     { name: "Alphabetically", type: "alphabetically" }
 ]
 
+// 01:52:00
 const Home = () => {
     const dispatch = useDispatch();
     const items = useSelector(({ pizzas }) => pizzas.items);
