@@ -1,7 +1,9 @@
 import React from 'react'
-import { Categories, SortPopup, PizzaBlock } from '../components/index'
+import { Categories, SortPopup, PizzaBlock, LoadingBlock } from '../components/index'
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategory, setSortBy } from "../Redux/action/filters"
+import { fetchPizzas } from "../Redux/action/pizzas"
+
 
 
 const categoryNames = ["All", "Meat", "Vegetarian", "Grill", "Spicy", "Closed"];
@@ -11,9 +13,9 @@ const sortItems = [
     { name: "Alphabetically", type: "alphabetically" }
 ]
 
-// 01:52:00
 const Home = () => {
     const dispatch = useDispatch();
+
     const items = useSelector(({ pizzas }) => pizzas.items);
 
     const onSelectCategory = React.useCallback((index) => {
@@ -22,6 +24,14 @@ const Home = () => {
     const onSortBy = React.useCallback((name) => {
         dispatch(setSortBy(name))
     })
+
+
+    React.useEffect(() => {
+        setInterval(() => {
+            dispatch(fetchPizzas());
+
+        }, 2000);
+    }, []);
 
     return (
         <div className="container">
@@ -37,9 +47,27 @@ const Home = () => {
             </div>
             <h2 className="content__title">All</h2>
             <div className="content__items">
-                {items.map(obj => {
-                    return <PizzaBlock key={obj.id} {...obj} />
-                })}
+                {
+                    !items.length
+                        ?
+                        <>
+                            <LoadingBlock />
+                            <LoadingBlock />
+                            <LoadingBlock />
+                            <LoadingBlock />
+                            <LoadingBlock />
+                            <LoadingBlock />
+                            <LoadingBlock />
+                            <LoadingBlock />
+                            <LoadingBlock />
+                            <LoadingBlock />
+                        </>
+                        :
+                        items.map(obj => {
+                            return <PizzaBlock key={obj.id} {...obj} />
+                        })
+                }
+
             </div>
         </div>
     )
