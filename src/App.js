@@ -10,10 +10,12 @@ import { setPizzas } from "./Redux/action/pizzas"
 const App = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
-    axios.get("/db.json").then(({ data }) => {
-      dispatch(setPizzas(data.pizzas));
+    axios.get("http://localhost:3001/pizzas").then(({ data }) => {
+      dispatch(setPizzas(data));
+      console.log(data);
     })
   }, []);
+
   return (
     <div className="wrapper">
       <Header />
