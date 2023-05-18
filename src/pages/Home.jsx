@@ -17,6 +17,8 @@ const Home = () => {
     const dispatch = useDispatch();
 
     const items = useSelector(({ pizzas }) => pizzas.items);
+    const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded);
+    const { category, sortBy } = useSelector(({ filters }) => filters);
 
     const onSelectCategory = React.useCallback((index) => {
         dispatch(setCategory(index))
@@ -27,17 +29,15 @@ const Home = () => {
 
 
     React.useEffect(() => {
-        setInterval(() => {
-            dispatch(fetchPizzas());
-
-        }, 2000);
-    }, []);
+        dispatch(fetchPizzas(category, sortBy));
+    }, [category, sortBy]);
 
     return (
         <div className="container">
             <div className="content__top">
                 <Categories
-                    onClickItem={onSelectCategory}
+                    activeCategory={category}
+                    onClickCategory={onSelectCategory}
                     items={categoryNames}
                 />
                 <SortPopup
@@ -48,24 +48,12 @@ const Home = () => {
             <h2 className="content__title">All</h2>
             <div className="content__items">
                 {
-                    !items.length
-                        ?
-                        <>
-                            <LoadingBlock />
-                            <LoadingBlock />
-                            <LoadingBlock />
-                            <LoadingBlock />
-                            <LoadingBlock />
-                            <LoadingBlock />
-                            <LoadingBlock />
-                            <LoadingBlock />
-                            <LoadingBlock />
-                            <LoadingBlock />
-                        </>
-                        :
-                        items.map(obj => {
-                            return <PizzaBlock key={obj.id} {...obj} />
-                        })
+                    isLoaded ? items.map(obj => {
+                        return <PizzaBlock key={obj.id} {...obj} isLoading={true} />
+                    }) :
+                        Array(12)
+                            .fill(0)
+                            .map((_, index) => <LoadingBlock key={index} />)
                 }
 
             </div>

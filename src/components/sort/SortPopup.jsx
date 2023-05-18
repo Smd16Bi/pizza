@@ -1,7 +1,6 @@
 import React from 'react'
 
 const SortPopup = React.memo(({ items = [], onClickItem }) => {
-
     const [visiblePopup, setVisiblePopup] = React.useState(false);
     const [activeSort, setActiveSort] = React.useState(0);
     const activeLavel = items[activeSort].name;
