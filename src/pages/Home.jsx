@@ -51,7 +51,7 @@ const Home = () => {
             <div className="content__items">
                 {
                     isLoaded ? items.map(obj => {
-                        return <PizzaBlock key={obj.id} {...obj} isLoading={true} />
+                        return <PizzaBlock onClickAddPizza={(obj)=>console.log(obj)} key={obj.id} {...obj} isLoading={true} />
                     }) :
                         Array(12)
                             .fill(0)

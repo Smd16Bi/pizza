@@ -1,8 +1,9 @@
 import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types';
+import Button from '../button/Button';
 
-const PizzaBlock = ({ name, imageUrl,price, types, sizes }) => {
+const PizzaBlock = ({ id,name, imageUrl,price, types, sizes,onClickAddPizza }) => {
     const avalibleTypes = ["Thin", "Traditional"];
     const avalibleSize = [26,30,40];
     const [activeType, setActiveType] = React.useState(types[0]);
@@ -68,7 +69,11 @@ const PizzaBlock = ({ name, imageUrl,price, types, sizes }) => {
             </div>
             <div className="pizza-block__bottom">
                 <div className="pizza-block__price">From {price} $ </div>
-                <div className="button button--outline button--add">
+                <Button 
+                    onClick={ ()=> onClickAddPizza({id,name, imageUrl,price})} 
+                    className="button--add" 
+                    outline
+                >
                     <svg
                         width="12"
                         height="12"
@@ -83,7 +88,7 @@ const PizzaBlock = ({ name, imageUrl,price, types, sizes }) => {
                     </svg>
                     <span>Add</span>
                     <i>2</i>
-                </div>
+                </Button>
             </div>
         </div>
     )
@@ -94,7 +99,8 @@ PizzaBlock.propTypes = {
     imageUrl:PropTypes.string.isRequired,
     price:PropTypes.number.isRequired,
     types:PropTypes.arrayOf(PropTypes.number).isRequired,
-    sizes:PropTypes.arrayOf(PropTypes.number).isRequired
+    sizes:PropTypes.arrayOf(PropTypes.number).isRequired,
+    onClickAddPizza:PropTypes.func.isRequired
 }
 PizzaBlock.defaultProps = {
     name: "Name default",

@@ -2,10 +2,11 @@ import React from 'react'
 import logo from "../../assets/img/pizza-logo.svg"
 import { Button } from '../index'
 import { NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 
 const Header = () => {
-
+    const { totalPrice, totalCount } = useSelector(({ cart }) => cart);
     return (
         <div className="header">
             <div className="container">
@@ -20,8 +21,8 @@ const Header = () => {
                 </div>
                 <div className="header__cart">
                     <NavLink to="/cart">
-                        <Button  className="button--cart" outline={false}>
-                            <span>520 $</span>
+                        <Button className="button--cart" outline={false}>
+                            <span>{totalPrice} $</span>
                             <div className="button__delimiter"></div>
                             <svg
                                 width="18"
@@ -52,7 +53,7 @@ const Header = () => {
                                     strokeLinejoin="round"
                                 />
                             </svg>
-                            <span>3</span>
+                            <span>{totalCount}</span>
                         </Button>
                     </NavLink>
                 </div>
