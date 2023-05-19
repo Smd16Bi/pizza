@@ -3,9 +3,9 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types';
 
 
-const Button = ({className,outline,children}) => {
+const Button = ({className,outline,children,onClick}) => {
     return (
-        <button className={classNames("button", className,
+        <button onClick={onClick} className={classNames("button", className,
             {
                 "button--outline": outline === true
             }
