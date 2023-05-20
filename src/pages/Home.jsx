@@ -3,8 +3,7 @@ import { Categories, SortPopup, PizzaBlock, LoadingBlock } from '../components/i
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategory, setSortBy } from "../Redux/action/filters"
 import { fetchPizzas } from "../Redux/action/pizzas"
-
-
+import { addPizzaToCart } from '../Redux/action/cart';
 
 const categoryNames = ["All", "Meat", "Vegetarian", "Grill", "Spicy", "Closed"];
 
@@ -18,15 +17,21 @@ const Home = () => {
     const dispatch = useDispatch();
 
     const items = useSelector(({ pizzas }) => pizzas.items);
+    const cartItems = useSelector(({cart}) => cart.items);
     const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded);
     const { category, sortBy } = useSelector(({ filters }) => filters);
-
+    console.log('====================================');
+    console.log(cartItems);
+    console.log('====================================');
     const onSelectCategory = React.useCallback((index) => {
         dispatch(setCategory(index))
     }, [])
     const onSelectSortType = React.useCallback((type) => {
         dispatch(setSortBy(type));
       }, []);
+    const addPizza = (obj) => {
+        dispatch(addPizzaToCart(obj))
+    }
 
 
     React.useEffect(() => {
@@ -51,7 +56,7 @@ const Home = () => {
             <div className="content__items">
                 {
                     isLoaded ? items.map(obj => {
-                        return <PizzaBlock onClickAddPizza={(obj)=>console.log(obj)} key={obj.id} {...obj} isLoading={true} />
+                        return <PizzaBlock addedCount={cartItems[obj.id] ? cartItems[obj.id].length : 0} onClickAddPizza={addPizza} key={obj.id} {...obj} isLoading={true} />
                     }) :
                         Array(12)
                             .fill(0)
