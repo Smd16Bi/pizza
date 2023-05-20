@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types';
 import Button from '../button/Button';
 
-const PizzaBlock = ({ id,name, imageUrl,price, types, sizes,onClickAddPizza }) => {
+const PizzaBlock = ({ id,name, addedCount, imageUrl,price, types, sizes,onClickAddPizza }) => {
     const avalibleTypes = ["Thin", "Traditional"];
     const avalibleSize = [26,30,40];
     const [activeType, setActiveType] = React.useState(types[0]);
@@ -16,6 +16,17 @@ const PizzaBlock = ({ id,name, imageUrl,price, types, sizes,onClickAddPizza }) =
         setActiveSize(index)
     }
 
+    const onAddPizza = () => {
+        const obj = {
+            id,
+            name,
+            imageUrl,
+            price,
+            size:avalibleSize[activeSize],
+            type:avalibleTypes[activeType]
+        }
+        onClickAddPizza(obj)
+    }
     return (
         <div className="pizza-block">
             <img
@@ -70,7 +81,7 @@ const PizzaBlock = ({ id,name, imageUrl,price, types, sizes,onClickAddPizza }) =
             <div className="pizza-block__bottom">
                 <div className="pizza-block__price">From {price} $ </div>
                 <Button 
-                    onClick={ ()=> onClickAddPizza({id,name, imageUrl,price})} 
+                    onClick={onAddPizza} 
                     className="button--add" 
                     outline
                 >
@@ -87,7 +98,7 @@ const PizzaBlock = ({ id,name, imageUrl,price, types, sizes,onClickAddPizza }) =
                         />
                     </svg>
                     <span>Add</span>
-                    <i>2</i>
+                    <i>{addedCount}</i>
                 </Button>
             </div>
         </div>
@@ -100,7 +111,8 @@ PizzaBlock.propTypes = {
     price:PropTypes.number.isRequired,
     types:PropTypes.arrayOf(PropTypes.number).isRequired,
     sizes:PropTypes.arrayOf(PropTypes.number).isRequired,
-    onClickAddPizza:PropTypes.func.isRequired
+    onClickAddPizza:PropTypes.func.isRequired,
+    addedCount:PropTypes.number.isRequired
 }
 PizzaBlock.defaultProps = {
     name: "Name default",
@@ -108,6 +120,7 @@ PizzaBlock.defaultProps = {
     price: 1,
     types: [],
     sizes: [],
+    addedCount: 0
 }
 
 export default PizzaBlock
