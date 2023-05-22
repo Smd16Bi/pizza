@@ -20,9 +20,6 @@ const Home = () => {
     const cartItems = useSelector(({cart}) => cart.items);
     const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded);
     const { category, sortBy } = useSelector(({ filters }) => filters);
-    console.log('====================================');
-    console.log(cartItems);
-    console.log('====================================');
     const onSelectCategory = React.useCallback((index) => {
         dispatch(setCategory(index))
     }, [])
@@ -56,7 +53,13 @@ const Home = () => {
             <div className="content__items">
                 {
                     isLoaded ? items.map(obj => {
-                        return <PizzaBlock addedCount={cartItems[obj.id] ? cartItems[obj.id].length : 0} onClickAddPizza={addPizza} key={obj.id} {...obj} isLoading={true} />
+                        return <PizzaBlock 
+                            addedCount={cartItems[obj.id] ? cartItems[obj.id].items.length : 0} 
+                            onClickAddPizza={addPizza} 
+                            key={obj.id} 
+                            {...obj} 
+                            isLoading={true} 
+                            />
                     }) :
                         Array(12)
                             .fill(0)
