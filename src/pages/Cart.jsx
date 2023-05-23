@@ -2,23 +2,35 @@ import React from 'react'
 import { CartEmpty, CartItem } from '../components'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { clearCart } from '../Redux/action/cart'
-// 1:23:58
+import { clearCart, minusItem, plusItem, removeCartItem } from '../Redux/action/cart'
+
 const Cart = () => {
   const dispatch = useDispatch();
   const { totalPrice, totalCount, items } = useSelector(({ cart }) => cart);
-
   const pizzas = Object.keys(items).map(key => {
     return items[key].items[0];
   })
-
-
   const onClearCart = () => {
     if (window.confirm("You are sure you want to empty the cart?")) {
       dispatch(clearCart())
     }
   }
 
+  const onRemoveCartItem = (id) => {
+    dispatch(removeCartItem(id))
+  }
+
+  const onPlusItem = (id) => {
+    dispatch(plusItem(id))
+  }
+  const onMinusItem = (id) => {
+    dispatch(minusItem(id))
+  }
+
+  const onClickOrder = () => {
+    alert("Show console")
+    console.log("Our order",items )
+  }
   return (
     <div className="container container--cart">
       {pizzas.length === 0
@@ -45,7 +57,11 @@ const Cart = () => {
           <div className="content__items">
             {pizzas.map(pizza => {
               return <CartItem
+                onRemoveCartItem={onRemoveCartItem}
+                onPlusItem={onPlusItem}
+                onMinusItem={onMinusItem}
                 key={pizza.id}
+                id={pizza.id}
                 totalPrice={items[pizza.id].totalPrice}
                 totalCount={items[pizza.id].items.length}
                 name={pizza.name}
@@ -68,7 +84,7 @@ const Cart = () => {
 
                 <span>Back</span>
               </NavLink>
-              <div className="button pay-btn">
+              <div onClick={onClickOrder} className="button pay-btn">
                 <span>Buy now</span>
               </div>
             </div>
